@@ -10,7 +10,9 @@ Pokedex para o Minas Coders
 ### Backend
 `npm init`
 `npm install express`
+`npm i -D nodemon`
 `npm install axios`
+
 
 API's de referência:
 https://pokeapi.co/docs/v2#pokemon
