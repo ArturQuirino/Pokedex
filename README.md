@@ -6,12 +6,15 @@ Pokedex para o Minas Coders
 
 ### Frontend
 `npx create-react-app pokedex`
+`npm install react-router-dom`
+`npm install axios`
 
 ### Backend
 `npm init`
 `npm install express`
 `npm i -D nodemon`
 `npm install axios`
+`npm install cors`
 
 
 API's de referência:

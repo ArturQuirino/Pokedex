@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
-const port = 3000;
+var cors = require('cors')
+const port = 8080;
+app.use(cors())
 
 app.get('/pokemons/', async (req, res) => {
   const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=150');
