@@ -15,9 +15,11 @@ const Pokedex = () => {
 
   return (
     <main>
-      {pokemons.map((pokemon) => (
-        <section>{pokemon.name}</section>
-      ))}
+      <div className="Pokedex-pagina">
+        {pokemons.map((pokemon) => (
+          <section>{pokemon.name}</section>
+        ))}
+      </div>
     </main>
   );
 };
