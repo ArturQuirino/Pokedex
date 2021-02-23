@@ -1,4 +1,5 @@
 import './App.css';
+import Pokédex_logo from './assets/images/Pokédex_logo.webp';
 
 import React from "react";
 import {
@@ -14,11 +15,13 @@ function App() {
   return (
     <Router>
       <div className="App">
+
         <header className="App-header">
-          <h1>POKEDEX</h1>
-          <nav>
-            <Link to="/">Pokedex</Link>
-            <Link to="computador">Computador</Link>
+          <img src={Pokédex_logo} className="App-titulo"/>
+          <nav className="App-navbar">
+            <Link to="/" className="App-abas-pokedex">Pokedex</Link>
+            <Link to="computador" className="App-abas-computador">Computador</Link>
+            <input id="search" placeholder="Pesquisar pokémon..." className="App-busca"></input>
           </nav>
         </header>
 
