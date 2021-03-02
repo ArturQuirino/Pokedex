@@ -1,15 +1,16 @@
-.Card-externo {
+.card-externo {
     width: 203px;
     height: 238px;
     background-color: #E80F0F;
-    display: grid;
-    align-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     text-align: center;
     border-radius: 10px;
 }
 
-.Card-nome {
+.card-nome {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: bold;
@@ -19,7 +20,7 @@
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.Card-dropdown {
+.card-dropdown {
     position: relative;
     display: inline-block;
     font-family: 'Roboto';
@@ -29,7 +30,7 @@
     color: #FFF2F2;
   }
   
-  .Card-dropdown-aberto {
+  .card-dropdown-aberto {
     display: none;
     position: absolute;
     background-color: #E80F0F;
@@ -39,6 +40,10 @@
     z-index: 1;
   }
   
-  .Card-dropdown:hover .Card-dropdown-aberto {
+  .card-dropdown:hover .card-dropdown-aberto {
     display: block;
+}
+
+.card-imagem {
+  width: 80%;
 }
