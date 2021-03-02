@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { obterTodosPokemons } from '../repositories/api';
+import CardPokemon from '../shared/cardPokemon'
 
 const Pokedex = () => {
   const [pokemons, setPokemons] = useState([]);
@@ -14,10 +15,10 @@ const Pokedex = () => {
   };
 
   return (
-    <main>
-      <div className="Pokedex-pagina">
+    <main className="Pokedex-pagina">
+      <div>
         {pokemons.map((pokemon) => (
-          <section>{pokemon.name}</section>
+          <CardPokemon name={pokemon.name} url={pokemon.url} />
         ))}
       </div>
     </main>
