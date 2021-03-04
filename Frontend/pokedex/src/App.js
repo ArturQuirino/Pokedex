@@ -12,7 +12,7 @@ import Computador from './pages/computador/computador';
 import Pokedex from './pages/pokedex/pokedex';
 
 function App() {
-  return (
+   return (
     <Router>
       <div className="App">
 

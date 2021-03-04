@@ -54,9 +54,7 @@ function CardPokemon(props) {
                     Speed: {stat.find(s => s.name === 'speed').value}
                   </div>
               </div>
-            )}
-
-            
+            )}    
         </div>
     </div> 
   );

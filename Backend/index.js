@@ -9,7 +9,7 @@ app.use(cors())
 app.get('/pokemons/', async (req, res) => {
   try 
   {
-    const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=150');
+    const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
     console.log(response);
     res.send(response.data.results.map(pokemon => {
       return {name: pokemon.name, id: pokemon.url.slice(34).replace('/','')}
