@@ -2,9 +2,15 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 const express = require('express');
 const app = express();
 const axios = require('axios');
+const { MongoClient } = require('mongodb');
 var cors = require('cors')
 const port = 8080;
-app.use(cors())
+app.use(cors());
+const dotenv = require('dotenv');
+dotenv.config();
+
+const uri = process.env['mongoConnectionString'];
+const client = new MongoClient(uri);
 
 app.get('/pokemons/', async (req, res) => {
   try 
@@ -44,6 +50,44 @@ app.get('/pokemons/:id', async (req, res) => {
   }
 })
 
+
+app.post('/catchedpokemons/:id', async (req, res) => {
+  try {
+    await client.connect();
+    const insertedPokemon = await insertPokemon(req.params.id);
+    res.send(insertedPokemon);
+  } catch (e) {
+    console.error(e);
+    res.send(e);
+  } finally {
+    await client.close();
+  }
+});
+
+app.get('/catchedpokemons/', async (req, res) => {
+  try {
+    await client.connect();
+    const insertedPokemons = await getInsertedPokemons();
+    res.send(insertedPokemons);
+  } catch (e) {
+    res.send(e);
+  } finally {
+    await client.close();
+  }
+});
+
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 })
+
+
+const insertPokemon = async (id) => {
+  const insertedPokemon = await client.db("Pokedex").collection('PokemonsCapturados').insertOne({idPokemon: id});
+  return insertedPokemon;
+}
+
+const getInsertedPokemons = async () => {
+  const insertedPokemons = await client.db("Pokedex").collection('PokemonsCapturados').find({}, {}).toArray();
+  return insertedPokemons;
+}
