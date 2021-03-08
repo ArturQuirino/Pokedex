@@ -17,7 +17,7 @@ function App() {
       <div className="App">
 
         <header className="App-header">
-          <img src={Pokédex_logo} className="App-titulo"/>
+          <img src={Pokédex_logo} className="App-titulo" alt="Logo Pokemon"/>
           <nav className="App-navbar">
             <Link to="/" className="App-abas-pokedex">Pokedex</Link>
             <Link to="computador" className="App-abas-computador">Computador</Link>
