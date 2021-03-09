@@ -8,9 +8,9 @@ const port = 8080;
 app.use(cors());
 const dotenv = require('dotenv');
 dotenv.config();
+app.use(express.json());
 
 const uri = process.env['mongoConnectionString'];
-const client = new MongoClient(uri);
 
 app.get('/pokemons/', async (req, res) => {
   try 
@@ -53,8 +53,10 @@ app.get('/pokemons/:id', async (req, res) => {
 
 app.post('/catchedpokemons/:id', async (req, res) => {
   try {
+    const client = new MongoClient(uri, {useNewUrlParser: true});
     await client.connect();
-    const insertedPokemon = await insertPokemon(req.params.id);
+    const { name } = req.body; 
+    const insertedPokemon = await insertPokemon(req.params.id, name);
     res.send(insertedPokemon);
   } catch (e) {
     console.error(e);
@@ -66,13 +68,14 @@ app.post('/catchedpokemons/:id', async (req, res) => {
 
 app.get('/catchedpokemons/', async (req, res) => {
   try {
+    const client = new MongoClient(uri, {useNewUrlParser: true});
     await client.connect();
-    const insertedPokemons = await getInsertedPokemons();
+    const insertedPokemons = await getInsertedPokemons(client);
+    await client.close();
     res.send(insertedPokemons);
   } catch (e) {
-    res.send(e);
-  } finally {
     await client.close();
+    res.send(e);
   }
 });
 
@@ -82,12 +85,13 @@ app.listen(port, () => {
 })
 
 
-const insertPokemon = async (id) => {
-  const insertedPokemon = await client.db("Pokedex").collection('PokemonsCapturados').insertOne({idPokemon: id});
+const insertPokemon = async (id, name) => {
+  const catchDate = new Date();
+  const insertedPokemon = await client.db("Pokedex").collection('PokemonsCapturados').insertOne({idPokemon: id, name: name, catchDate: catchDate});
   return insertedPokemon;
 }
 
-const getInsertedPokemons = async () => {
+const getInsertedPokemons = async (client) => {
   const insertedPokemons = await client.db("Pokedex").collection('PokemonsCapturados').find({}, {}).toArray();
   return insertedPokemons;
 }
