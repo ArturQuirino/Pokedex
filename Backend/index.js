@@ -16,7 +16,6 @@ app.get('/pokemons/', async (req, res) => {
   try 
   {
     const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
-    console.log(response);
     res.send(response.data.results.map(pokemon => {
       return {name: pokemon.name, id: pokemon.url.slice(34).replace('/','')}
     }));
@@ -30,18 +29,7 @@ app.get('/pokemons/', async (req, res) => {
 app.get('/pokemons/:id', async (req, res) => {
   try
   {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${req.params.id}`);
-    console.log(response);
-    const pokemon = {
-      id: response.data.id,
-      name: response.data.name,
-      types: response.data.types.map(type => type.type.name),
-      abilities: response.data.abilities.map(ability => ability.ability.name),
-      stat: response.data.stats.map(stat => {
-        return {name: stat.stat.name, value: stat.base_stat}
-      })
-    }
-
+    const pokemon = await obterDetalhesPokemon(req.params.id);
     res.send(pokemon);
   }
   catch(e)
@@ -56,7 +44,7 @@ app.post('/catchedpokemons/:id', async (req, res) => {
     const client = new MongoClient(uri, {useNewUrlParser: true});
     await client.connect();
     const { name } = req.body; 
-    const insertedPokemon = await insertPokemon(req.params.id, name);
+    const insertedPokemon = await insertPokemon(req.params.id, name, client);
     res.send(insertedPokemon);
   } catch (e) {
     console.error(e);
@@ -85,7 +73,7 @@ app.listen(port, () => {
 })
 
 
-const insertPokemon = async (id, name) => {
+const insertPokemon = async (id, name, client) => {
   const catchDate = new Date();
   const insertedPokemon = await client.db("Pokedex").collection('PokemonsCapturados').insertOne({idPokemon: id, name: name, catchDate: catchDate});
   return insertedPokemon;
@@ -94,4 +82,18 @@ const insertPokemon = async (id, name) => {
 const getInsertedPokemons = async (client) => {
   const insertedPokemons = await client.db("Pokedex").collection('PokemonsCapturados').find({}, {}).toArray();
   return insertedPokemons;
+}
+
+async function obterDetalhesPokemon(id) {
+  const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  const pokemon = {
+    id: response.data.id,
+    name: response.data.name,
+    types: response.data.types.map(type => type.type.name),
+    abilities: response.data.abilities.map(ability => ability.ability.name),
+    stat: response.data.stats.map(stat => {
+      return { name: stat.stat.name, value: stat.base_stat };
+    })
+  };
+  return pokemon;
 }

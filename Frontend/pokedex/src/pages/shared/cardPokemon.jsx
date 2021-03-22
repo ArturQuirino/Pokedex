@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import './cardPokemon.css';
-import { obterDadosPokemon } from '../repositories/api';
+import { obterDadosPokemon,  catchPokemon} from '../repositories/api';
 
 function CardPokemon(props) {
   const [modalAberto, setModalAberto] = useState(false);
   const [types, setTypes] = useState([]);
   const [abilities, setAbilities] = useState([]);
   const [stat, setStat] = useState([]);
-  const { pokemon } = props
+  const { pokemon } = props;
   const { name, id } = pokemon;
   const urlImagem = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
 
@@ -17,8 +17,11 @@ function CardPokemon(props) {
     setTypes(types);
     setAbilities(abilities);
     setStat(stat);
-    console.log(stat);
     setModalAberto(!modalAberto);
+  }
+
+  const handleCatchPokemon = async () => {
+    await catchPokemon(id, name);
   }
 
   return ( 
@@ -53,6 +56,7 @@ function CardPokemon(props) {
                   <div>
                     Speed: {stat.find(s => s.name === 'speed').value}
                   </div>
+                  <button className="card-botao-catch" onClick={handleCatchPokemon}>Catch</button>
               </div>
             )}    
         </div>
