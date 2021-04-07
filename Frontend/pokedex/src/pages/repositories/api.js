@@ -20,4 +20,9 @@ export const getCatchedPokemons = async () => {
   return catchedPokemonResponse.data;
 }
 
+export const soltarPokemon = async (id) => {
+  const pokemonDeletado = await axios.get(`http://localhost:8080/soltarpokemon/${id}`)
+  return pokemonDeletado;
+}
+
 

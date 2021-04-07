@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const axios = require('axios');
 const { MongoClient } = require('mongodb');
+var mongodb = require('mongodb');
 var cors = require('cors')
 const port = 8080;
 app.use(cors());
@@ -44,8 +45,8 @@ app.post('/catchedpokemons/:id', async (req, res) => {
     const client = new MongoClient(uri, {useNewUrlParser: true});
     await client.connect();
     const { name } = req.body; 
-    const insertedPokemon = await insertPokemon(req.params.id, name, client);
-    res.send(insertedPokemon);
+    const pokemonInserido = await insertPokemon(req.params.id, name, client);
+    res.send(pokemonInserido);
   } catch (e) {
     console.error(e);
     res.send(e);
@@ -58,30 +59,46 @@ app.get('/catchedpokemons/', async (req, res) => {
   try {
     const client = new MongoClient(uri, {useNewUrlParser: true});
     await client.connect();
-    const insertedPokemons = await getInsertedPokemons(client);
+    const pokemonsInseridos = await getInsertedPokemons(client);
     await client.close();
-    res.send(insertedPokemons);
+    res.send(pokemonsInseridos);
   } catch (e) {
     await client.close();
     res.send(e);
   }
 });
 
+app.get('/soltarpokemon/:id', async (req, res) => {
+  try {
+    const client = new MongoClient(uri, {useNewUrlParser: true});
+    await client.connect();
+    const pokemonDeletado = await deletePokemon(req.params.id, client);
+    await client.close();
+    res.send(pokemonDeletado);
+  } catch (e) {
+    await client.close();
+    res.send(e);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 })
 
+const deletePokemon = async (id, client) => {
+  const pokemonDeletado = await client.db("Pokedex").collection('PokemonsCapturados').deleteOne({_id: new mongodb.ObjectID(id)});
+  return pokemonDeletado;
+}
 
 const insertPokemon = async (id, name, client) => {
   const catchDate = new Date();
-  const insertedPokemon = await client.db("Pokedex").collection('PokemonsCapturados').insertOne({idPokemon: id, name: name, catchDate: catchDate});
-  return insertedPokemon;
+  const pokemonInserido = await client.db("Pokedex").collection('PokemonsCapturados').insertOne({idPokemon: id, name: name, catchDate: catchDate});
+  return pokemonInserido;
 }
 
 const getInsertedPokemons = async (client) => {
-  const insertedPokemons = await client.db("Pokedex").collection('PokemonsCapturados').find({}, {}).toArray();
-  return insertedPokemons;
+  const pokemonsInseridos = await client.db("Pokedex").collection('PokemonsCapturados').find({}, {}).toArray();
+  return pokemonsInseridos;
 }
 
 async function obterDetalhesPokemon(id) {

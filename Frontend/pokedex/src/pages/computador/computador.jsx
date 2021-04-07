@@ -26,7 +26,7 @@ const Computador = () => {
   return (
     <main className="computador-pagina">
       {pokemonsCapturados.map((pok) => (
-        <CardPokemon pokemon={pok}></CardPokemon>
+        <CardPokemon pokemon={pok} tipoCard={2} idBanco={pok.idPokemonCapturado}/>
       ))}
     </main>
   );

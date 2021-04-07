@@ -18,7 +18,7 @@ const Pokedex = () => {
   return (
     <main className="pokedex-pagina">
         {pokemons.map((pokemon) => (
-          <CardPokemon pokemon={pokemon} />
+          <CardPokemon pokemon={pokemon} tipoCard={1}/>
         ))}
     </main>
   );

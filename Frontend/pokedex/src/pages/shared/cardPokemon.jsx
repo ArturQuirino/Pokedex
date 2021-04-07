@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import './cardPokemon.css';
-import { obterDadosPokemon,  catchPokemon} from '../repositories/api';
+import { obterDadosPokemon,  catchPokemon, soltarPokemon} from '../repositories/api';
+import ModalMensagem from '../shared/modalMensagem';
 
 function CardPokemon(props) {
   const [modalAberto, setModalAberto] = useState(false);
+  const [cardAberto, setCardAberto] = useState(false);
   const [types, setTypes] = useState([]);
   const [abilities, setAbilities] = useState([]);
   const [stat, setStat] = useState([]);
+  const [tipoCard] = useState(props.tipoCard);
+  const [idBanco] = useState(props.idBanco);
   const { pokemon } = props;
   const { name, id } = pokemon;
   const urlImagem = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
@@ -17,11 +21,23 @@ function CardPokemon(props) {
     setTypes(types);
     setAbilities(abilities);
     setStat(stat);
-    setModalAberto(!modalAberto);
+    setCardAberto(!cardAberto);
   }
 
   const handleCatchPokemon = async () => {
     await catchPokemon(id, name);
+    setModalAberto(true);
+    setCardAberto(false)
+  }
+
+  const handleSoltarPokemon = async () => {
+    await soltarPokemon(idBanco);
+    setModalAberto(true);
+    setCardAberto(false);
+  }
+
+  const fecharModal = async () => {
+    setModalAberto(false);
   }
 
   return ( 
@@ -30,7 +46,7 @@ function CardPokemon(props) {
         <div className="card-nome">#{id} - {name} </div>
         <div className="card-dropdown">
             <button className="card-botao" onClick={abrirDetalhesPokemon}> + </button>
-            {modalAberto && (
+            {cardAberto && (
               <div className="card-dropdown-aberto">
                   <div>
                     Type: {types.join(' / ')}
@@ -56,11 +72,15 @@ function CardPokemon(props) {
                   <div>
                     Speed: {stat.find(s => s.name === 'speed').value}
                   </div>
-                  <button className="card-botao-catch" onClick={handleCatchPokemon}>Catch</button>
+
+                  {tipoCard === 1 && (<button className="card-botao-catch" onClick={handleCatchPokemon}>Capturar</button>)}
+                  {tipoCard === 2 && (<button className="card-botao-catch" onClick={handleSoltarPokemon}>Soltar</button>)}
               </div>
             )}    
         </div>
-    </div> 
+        {tipoCard === 1 && modalAberto && (<ModalMensagem mensagem={ "Pokemon capturado com sucesso!"} modalAberto={modalAberto} callBackParent={(modalAberto) => fecharModal()}></ModalMensagem>)}
+        {tipoCard === 2 && modalAberto && (<ModalMensagem mensagem={ "Pokemon solto com sucesso!"} modalAberto={modalAberto} callBackParent={(modalAberto) => fecharModal()}></ModalMensagem>)}
+    </div>
   );
 }
  
