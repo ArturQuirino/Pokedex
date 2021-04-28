@@ -1,85 +1,60 @@
 import React, { useState } from 'react';
+import { obterDadosPokemon } from '../repositories/api'
 import './cardPokemon.css';
-import { obterDadosPokemon,  catchPokemon, soltarPokemon} from '../repositories/api';
-import ModalMensagem from '../shared/modalMensagem';
 
-function CardPokemon(props) {
-  const [modalAberto, setModalAberto] = useState(false);
+const CardPokemon = (props) => {
+
   const [cardAberto, setCardAberto] = useState(false);
   const [types, setTypes] = useState([]);
   const [abilities, setAbilities] = useState([]);
   const [stat, setStat] = useState([]);
-  const [tipoCard] = useState(props.tipoCard);
-  const [idBanco] = useState(props.idBanco);
   const { pokemon } = props;
   const { name, id } = pokemon;
   const urlImagem = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
 
-  const abrirDetalhesPokemon = async () => {
-    const dadosPokemon = await obterDadosPokemon(id);
-    const { types, abilities, stat } = dadosPokemon;
+  const abrirDropdown = async () => {
+    const detalhesPokemon = await obterDadosPokemon(id);
+    const { types, abilities, stat } = detalhesPokemon;
     setTypes(types);
     setAbilities(abilities);
-    setStat(stat);
+    setStat(stat); 
     setCardAberto(!cardAberto);
-  }
-
-  const handleCatchPokemon = async () => {
-    await catchPokemon(id, name);
-    setModalAberto(true);
-    setCardAberto(false)
-  }
-
-  const handleSoltarPokemon = async () => {
-    await soltarPokemon(idBanco);
-    setModalAberto(true);
-    setCardAberto(false);
-  }
-
-  const fecharModal = async () => {
-    setModalAberto(false);
   }
 
   return ( 
     <div className="card-externo">
-        <img src={urlImagem} className="card-imagem" alt={name}/>
-        <div className="card-nome">#{id} - {name} </div>
-        <div className="card-dropdown">
-            <button className="card-botao" onClick={abrirDetalhesPokemon}> + </button>
-            {cardAberto && (
-              <div className="card-dropdown-aberto">
-                  <div>
-                    Type: {types.join(' / ')}
-                  </div>
-                  <div>
-                    Abilities: {abilities.join(' / ')}
-                  </div>
-                  <div>
-                    HP: {stat.find(s => s.name === 'hp').value}
-                  </div>
-                  <div>
-                    Attack: {stat.find(s => s.name === 'attack').value}
-                  </div>
-                  <div>
-                    Defense: {stat.find(s => s.name === 'defense').value}
-                  </div>
-                  <div>
-                    S.Atack: {stat.find(s => s.name === 'special-attack').value}
-                  </div>
-                  <div>
-                    S.Defence: {stat.find(s => s.name === 'special-defense').value}
-                  </div>
-                  <div>
-                    Speed: {stat.find(s => s.name === 'speed').value}
-                  </div>
-
-                  {tipoCard === 1 && (<button className="card-botao-catch" onClick={handleCatchPokemon}>Capturar</button>)}
-                  {tipoCard === 2 && (<button className="card-botao-catch" onClick={handleSoltarPokemon}>Soltar</button>)}
-              </div>
-            )}    
-        </div>
-        {tipoCard === 1 && modalAberto && (<ModalMensagem mensagem={ "Pokemon capturado com sucesso!"} modalAberto={modalAberto} callBackParent={(modalAberto) => fecharModal()}></ModalMensagem>)}
-        {tipoCard === 2 && modalAberto && (<ModalMensagem mensagem={ "Pokemon solto com sucesso!"} modalAberto={modalAberto} callBackParent={(modalAberto) => fecharModal()}></ModalMensagem>)}
+      <img src={urlImagem} className="card-imagem"/>
+      <h1 className="card-nome">#{id} - {name}</h1>
+      <div className="card-dropdown">
+        <button className="card-botao" onClick={abrirDropdown}> + </button>
+        { cardAberto && (
+          <div className="card-dropdown-aberto">
+            <div>
+              Type: {types.join(" / ")}
+            </div>
+            <div>
+              Abilities: {abilities.join(" / ")}
+            </div>
+            <div>
+              HP: {stat.find(p => p.name === 'hp').value}
+            </div>
+            <div>
+              Attack: {stat.find(p => p.name === 'attack').value}
+            </div>
+            <div>
+              Defense: {stat.find(p => p.name === 'defense').value}
+            </div>
+            <div>
+              Sp.Atk: {stat.find(p => p.name === 'special-attack').value}
+            </div>
+            <div>
+              Sp.Def: {stat.find(p => p.name === 'special-defense').value}
+            </div>
+            
+            <button className="card-botao-catch">Capturar</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

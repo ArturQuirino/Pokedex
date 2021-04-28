@@ -12,28 +12,26 @@ import Computador from './pages/computador/computador';
 import Pokedex from './pages/pokedex/pokedex';
 
 function App() {
-   return (
+  return (
     <Router>
-      <div className="App">
+      <div className="app"></div>
+      <header className="app-header">
+        <img src={Pokédex_logo} className="app-titulo"/>
+        <nav className="app-navbar">
+            <Link to="/" className="app-abas-pokedex">Pokedex</Link>
+            <Link to="computador" className="app-abas-computador">Computador</Link>
+            <input id="search" placeholder="Pesquisar pokémon..." className="app-busca"></input>
+        </nav>
+      </header>
 
-        <header className="App-header">
-          <img src={Pokédex_logo} className="App-titulo" alt="Logo Pokemon"/>
-          <nav className="App-navbar">
-            <Link to="/" className="App-abas-pokedex">Pokedex</Link>
-            <Link to="computador" className="App-abas-computador">Computador</Link>
-            <input id="search" placeholder="Pesquisar pokémon..." className="App-busca"></input>
-          </nav>
-        </header>
-
-        <Switch>
+      <Switch>
           <Route path="/computador">
             <Computador />
           </Route>
           <Route path="/">
             <Pokedex />
           </Route>
-        </Switch>
-      </div>
+      </Switch>
     </Router>
   );
 }

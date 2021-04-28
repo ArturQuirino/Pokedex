@@ -1,6 +1,6 @@
 .card-externo {
     width: 203px;
-    height: 238px;
+    height: 260px;
     background-color: #E80F0F;
     display: flex;
     flex-direction: column;
@@ -9,6 +9,14 @@
     text-align: center;
     border-radius: 10px;
 }
+
+.card-imagem {
+    width: 85%;
+    height: 62%;
+    background-color: #FFF2F2;
+    border-radius: 10px;
+    border: 2px solid #FF9292;
+  }
 
 .card-nome {
     margin-top: 8px;
@@ -21,47 +29,39 @@
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.card-dropdown {
-  position: relative;
-  display: inline-block;
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  color: #FFF2F2;
-}
-  
-.card-dropdown-aberto {
-  position: absolute;
-  background-color: #E51919;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 12px 16px;
-  border-radius: 10px;
-  z-index: 1;
-}
-
 .card-botao {
-  background-color: #E80F0F;
-  border: none;
-  color: white;
-  font-size: 32px;
-  cursor: pointer;
+    background-color: #E80F0F;
+    border: none;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
 }
 
-.card-imagem {
-  width: 85%;
-  height: 63%;
-  background-color: #FFF2F2;
-  border-radius: 10px;
-  border: 2px solid #FF9292;
+.card-dropdown {
+    position: relative;
+    display: inline-block;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFF2F2;
+}
+
+.card-dropdown-aberto {
+    position: absolute;
+    background-color: #E51919;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    border-radius: 10px;
+    z-index: 1;
 }
 
 .card-botao-catch {
-  background-color: #E80F0F;
-  border: 2px solid #FFF2F2;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 12px 0 0;
-}
+    background-color: #E80F0F;
+    border: 2px solid #FFF2F2;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 12px 0 0;
+  }
