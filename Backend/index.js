@@ -2,9 +2,11 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 const express = require('express');
 const app = express();
 const axios = require('axios');
-var cors = require('cors')
+var cors = require('cors');
+const { MongoClient } = require('mongodb');
 const port = 8080;
-app.use(cors())
+app.use(cors());
+
 
 app.get('/pokemons/', async (req, res) => {
   try 
@@ -30,6 +32,27 @@ app.get('/pokemons/:id', async (req, res) => {
   catch(e)
   {
     console.error(e);
+  }
+})
+
+
+app.post('/pokemonscapturados/:id', async (req, res) => {
+  try{
+    const uri = "mongodb+srv://admin:SaudadesMoura@cluster0.ddaip.mongodb.net/test";
+    console.log(uri);
+    const client = new MongoClient(uri, {useNewUrlParser: true});
+    await client.connect();
+    const { name } = req.body;
+    const dataDeCaptura = new Date();
+    const pokemonInserido = await client.db('Pokedex-Test').collection('Computador').insertOne({idPokemon: req.params.id, name: name, dataDeCaptura: dataDeCaptura})
+    res.send(pokemonInserido);
+  }
+  catch (e) {
+    console.error(e);
+    res.send(e)
+  }
+  finally {
+    await client.close();
   }
 })
 
