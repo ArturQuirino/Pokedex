@@ -4,9 +4,15 @@ const app = express();
 const axios = require('axios');
 var cors = require('cors');
 const { MongoClient } = require('mongodb');
+var mongodb = require('mongodb');
 const port = 8080;
+const dotenv = require('dotenv');
+dotenv.config();
 app.use(cors());
+app.use(express.json());
 
+
+const uri = process.env['mongoConnectionString'];
 
 app.get('/pokemons/', async (req, res) => {
   try 
@@ -38,18 +44,49 @@ app.get('/pokemons/:id', async (req, res) => {
 
 app.post('/pokemonscapturados/:id', async (req, res) => {
   try{
-    const uri = "mongodb+srv://admin:SaudadesMoura@cluster0.ddaip.mongodb.net/test";
     console.log(uri);
     const client = new MongoClient(uri, {useNewUrlParser: true});
     await client.connect();
     const { name } = req.body;
     const dataDeCaptura = new Date();
-    const pokemonInserido = await client.db('Pokedex-Test').collection('Computador').insertOne({idPokemon: req.params.id, name: name, dataDeCaptura: dataDeCaptura})
+    const pokemonInserido = await client.db('Pokedex-Teste').collection('Computador').insertOne({idPokemon: req.params.id, name: name, dataDeCaptura: dataDeCaptura})
     res.send(pokemonInserido);
   }
   catch (e) {
     console.error(e);
     res.send(e)
+  }
+  finally {
+    await client.close();
+  }
+});
+
+app.get('/pokemonscapturados/', async (req, res) => {
+  try{
+    const client = new MongoClient(uri, {useNewUrlParser: true});
+    await client.connect();
+    const pokemonsCapturados = await client.db('Pokedex-Teste').collection('Computador').find({}, {}).toArray();
+  
+    res.send(pokemonsCapturados);
+  }
+  catch (e){
+    console.error(e);
+  }
+  finally {
+    await client.close();
+  }
+
+});
+
+app.delete('/pokemonscapturados/:id', async (req, res) => {
+  try{
+    const client = new MongoClient(uri, {useNewUrlParser: true});
+    await client.connect();
+    const pokemonLiberado = await client.db('Pokedex-Teste').collection('Computador').deleteOne({_id: mongodb.ObjectID(req.params.id)})
+    res.send(pokemonLiberado);
+  }
+  catch (e){
+    console.error(e);
   }
   finally {
     await client.close();
