@@ -8,6 +8,7 @@ Pokedex para o Minas Coders
 `npx create-react-app pokedex`
 `npm install react-router-dom`
 `npm install axios`
+`npm install --save-dev jest`
 
 ### Backend
 `npm init`
