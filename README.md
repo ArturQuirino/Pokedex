@@ -11,7 +11,7 @@ Pokedex para o Minas Coders
 
 `npm install --save-dev jest babel-jest @babel/preset-env @babel/preset-react react-test-renderer`
 `npm add --dev enzyme`
-`npm i --save-dev @types/enzyme-adapter-react-16 `
+`npm i --save-dev @wojtekmaj/enzyme-adapter-react-17`
 
 ### Backend
 `npm init`
