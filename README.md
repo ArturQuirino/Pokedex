@@ -9,11 +9,9 @@ Pokedex para o Minas Coders
 `npm install react-router-dom`
 `npm install axios`
 
-`npm install --save-dev jest`
 `npm install --save-dev jest babel-jest @babel/preset-env @babel/preset-react react-test-renderer`
-`npm install react-test-renderer`
-`npm install enzyme-adapter-react-16`
 `npm add --dev enzyme`
+`npm i --save-dev @types/enzyme-adapter-react-16 `
 
 ### Backend
 `npm init`
