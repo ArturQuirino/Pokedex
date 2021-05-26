@@ -11,6 +11,7 @@ Pokedex para o Minas Coders
 
 `npm install --save-dev jest`
 `npm install --save-dev jest babel-jest @babel/preset-env @babel/preset-react react-test-renderer`
+`npm install react-test-renderer`
 `npm add --dev enzyme`
 
 ### Backend
