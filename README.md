@@ -12,6 +12,7 @@ Pokedex para o Minas Coders
 `npm install --save-dev jest`
 `npm install --save-dev jest babel-jest @babel/preset-env @babel/preset-react react-test-renderer`
 `npm install react-test-renderer`
+`npm install enzyme-adapter-react-16`
 `npm add --dev enzyme`
 
 ### Backend
@@ -26,4 +27,5 @@ Pokedex para o Minas Coders
 
 APIs de referência:
 https://pokeapi.co/docs/v2#pokemon
+
 https://pokeres.bastionbot.org/images/pokemon/${id}.png
