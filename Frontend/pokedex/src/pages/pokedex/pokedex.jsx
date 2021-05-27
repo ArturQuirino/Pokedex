@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { obterTodosPokemons } from '../repositories/api';
+import PokedexService from '../repositories/api';
 import CardPokemon from '../shared/cardPokemon'
 import './pokedex.css';
 
@@ -11,7 +11,7 @@ const Pokedex = () => {
   }, []);
 
   const listarTodosPokemons = async () => {
-    const pokemons = await obterTodosPokemons();
+    const pokemons = await PokedexService.obterTodosPokemons();
     setPokemons(pokemons);
   };
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './cardPokemon.css';
-import { obterDadosPokemon,  catchPokemon, soltarPokemon} from '../repositories/api';
+import PokedexService from '../repositories/api';
 import ModalMensagem from '../shared/modalMensagem';
 
 function CardPokemon(props) {
@@ -16,7 +16,7 @@ function CardPokemon(props) {
   const urlImagem = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
 
   const abrirDetalhesPokemon = async () => {
-    const dadosPokemon = await obterDadosPokemon(id);
+    const dadosPokemon = await PokedexService.obterDadosPokemon(id);
     const { types, abilities, stat } = dadosPokemon;
     setTypes(types);
     setAbilities(abilities);
@@ -25,13 +25,13 @@ function CardPokemon(props) {
   }
 
   const handleCatchPokemon = async () => {
-    await catchPokemon(id, name);
+    await PokedexService.catchPokemon(id, name);
     setModalAberto(true);
     setCardAberto(false)
   }
 
   const handleSoltarPokemon = async () => {
-    await soltarPokemon(idBanco);
+    await PokedexService.soltarPokemon(idBanco);
     setModalAberto(true);
     setCardAberto(false);
   }

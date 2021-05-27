@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './computador.css';
-import { getCatchedPokemons } from '../repositories/api';
+import PokedexService from '../repositories/api';
 import CardPokemon from '../shared/cardPokemon';
+import './computador.css';
 
 const Computador = () => {
   const [pokemonsCapturados, setPokemonsCapturados] = useState([]);
@@ -11,7 +11,7 @@ const Computador = () => {
   }, []);
 
   const listarPokemonsCapturados = async () => {
-    const pokemonsCapturadosRetorno  = await getCatchedPokemons();
+    const pokemonsCapturadosRetorno  = await PokedexService.getCatchedPokemons();
     const pokemons = pokemonsCapturadosRetorno.map(pok => {
       return {
         id: pok.idPokemon,
