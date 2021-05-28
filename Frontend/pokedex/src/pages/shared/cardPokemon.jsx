@@ -64,10 +64,10 @@ function CardPokemon(props) {
                     Defense: {stat.find(s => s.name === 'defense').value}
                   </div>
                   <div>
-                    S.Atack: {stat.find(s => s.name === 'special-attack').value}
+                    S.Attack: {stat.find(s => s.name === 'special-attack').value}
                   </div>
                   <div>
-                    S.Defence: {stat.find(s => s.name === 'special-defense').value}
+                    S.Defense: {stat.find(s => s.name === 'special-defense').value}
                   </div>
                   <div>
                     Speed: {stat.find(s => s.name === 'speed').value}
