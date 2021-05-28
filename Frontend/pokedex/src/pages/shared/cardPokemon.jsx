@@ -1,25 +1,44 @@
 import React, { useState } from 'react';
-import { obterDadosPokemon } from '../repositories/api'
+import PokedexService from '../repositories/api'
+import ModalMensagem from './modalMensagem';
 import './cardPokemon.css';
 
 const CardPokemon = (props) => {
 
+  const [modalAberto, setModalAberto] = useState(false);
   const [cardAberto, setCardAberto] = useState(false);
   const [types, setTypes] = useState([]);
   const [abilities, setAbilities] = useState([]);
   const [stat, setStat] = useState([]);
+  const [ tipoCard ] = useState(props.tipoCard);
   const { pokemon } = props;
-  const { name, id } = pokemon;
+  const { name, id, idPokemonCapturado} = pokemon;
   const urlImagem = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
 
   const abrirDropdown = async () => {
-    const detalhesPokemon = await obterDadosPokemon(id);
+    const detalhesPokemon = await PokedexService.obterDadosPokemon(id);
     const { types, abilities, stat } = detalhesPokemon;
     setTypes(types);
     setAbilities(abilities);
     setStat(stat); 
     setCardAberto(!cardAberto);
   }
+
+  const handleCapturarPokemon = async () => {
+    await PokedexService.capturarPokemon(id, name);
+    setModalAberto(true);
+    setCardAberto(false);
+  }
+
+  const handleSoltarPokemon = async () => {
+    await PokedexService.soltarPokemon(idPokemonCapturado);
+    setModalAberto(true);
+    setCardAberto(false);
+  }
+
+  const fecharModal = () => {
+    setModalAberto(false);
+  } 
 
   return ( 
     <div className="card-externo">
@@ -51,10 +70,13 @@ const CardPokemon = (props) => {
               Sp.Def: {stat.find(p => p.name === 'special-defense').value}
             </div>
             
-            <button className="card-botao-catch">Capturar</button>
+            {tipoCard===1 && (<button className="card-botao-catch" onClick={handleCapturarPokemon}>Capturar</button>)}
+            {tipoCard===2 && (<button className="card-botao-catch" onClick={handleSoltarPokemon}>Soltar</button>)}
           </div>
         )}
       </div>
+      {tipoCard===1 && modalAberto && (<ModalMensagem mensagem={"Pokemon foi capturado com sucesso!"} modalAberto={modalAberto} callBackParent={() => fecharModal()}></ModalMensagem>)}
+      {tipoCard===2 && modalAberto && (<ModalMensagem mensagem={"Pokemon foi solto com sucesso!"} modalAberto={modalAberto} callBackParent={() => fecharModal()}></ModalMensagem>)}
     </div>
   );
 }

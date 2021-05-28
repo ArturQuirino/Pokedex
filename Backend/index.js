@@ -11,7 +11,6 @@ dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-
 const uri = process.env['mongoConnectionString'];
 
 app.get('/pokemons/', async (req, res) => {

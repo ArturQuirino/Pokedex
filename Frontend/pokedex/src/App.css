@@ -59,3 +59,27 @@
   color: #FF9292;
   font-size: 16px;
 }
+
+::-webkit-input-placeholder {
+  color: #FF9292;
+  font-family: 'Roboto';
+  margin-left: 10px;
+}
+
+:-moz-placeholder {
+  color: #FF9292;
+  font-family: 'Roboto';
+  margin-left: 10px;  
+}
+
+::-moz-placeholder { 
+  color: #FF9292;
+  font-family: 'Roboto';
+  margin-left: 10px;  
+}
+
+:-ms-input-placeholder {  
+  color: #FF9292; 
+  font-family: 'Roboto';
+  margin-left: 10px; 
+}
