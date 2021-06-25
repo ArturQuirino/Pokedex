@@ -1,1 +1,1 @@
-web: sh -c 'cd ./Backend/ && npm start'
+web: cd ./Backend/ && npm start
