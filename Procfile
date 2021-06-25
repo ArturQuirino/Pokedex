@@ -1,1 +1,1 @@
-web: cd Backend
+web: sh -c 'cd ./Backend/
