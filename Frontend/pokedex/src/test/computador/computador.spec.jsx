@@ -1,9 +1,9 @@
 import React from 'react';
 import Renderer from 'react-test-renderer';
-import { act, cleanup } from '@testing-library/react';
-import Computador from '../../pages/shared/cardPokemon';
+import { cleanup } from '@testing-library/react';
+import Computador from '../../pages/computador/computador';
 import PokedexService from '../../pages/repositories/api';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import '../../setupEnzyme';
 
 jest.mock('../../pages/repositories/api', () => {
@@ -18,7 +18,7 @@ afterEach(cleanup);
 
 it('Deve renderizar corretamente', ()=> {
     const tree = Renderer.create(
-        <Computador />
+      <Computador filtro={''}/>
     ).toJSON();
     expect(tree).toMatchSnapshot();
 });

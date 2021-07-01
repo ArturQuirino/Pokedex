@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Deve renderizar corretamente 1`] = `
+<main
+  className="pokedex-pagina"
+>
+  <div
+    className="card-pokedex-pagina"
+    id="card-pokedex-root"
+  />
+</main>
+`;
