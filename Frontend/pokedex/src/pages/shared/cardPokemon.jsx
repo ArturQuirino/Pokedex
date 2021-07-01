@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './cardPokemon.css';
 import PokedexService from '../repositories/api';
-import ModalMensagem from '../shared/modalMensagem';
 
 function CardPokemon(props) {
-  const [modalAberto, setModalAberto] = useState(false);
+  const [modalAberto, setModalAberto] = useState(props.modalAberto);
   const [cardAberto, setCardAberto] = useState(false);
   const [types, setTypes] = useState([]);
   const [abilities, setAbilities] = useState([]);
@@ -22,23 +21,21 @@ function CardPokemon(props) {
     setAbilities(abilities);
     setStat(stat);
     setCardAberto(!cardAberto);
-  }
+  };
 
   const handleCatchPokemon = async () => {
     await PokedexService.catchPokemon(id, name);
     setModalAberto(true);
-    setCardAberto(false)
-  }
+    setCardAberto(false);
+    props.callBackParent(modalAberto);
+  };
 
   const handleSoltarPokemon = async () => {
     await PokedexService.soltarPokemon(idBanco);
     setModalAberto(true);
     setCardAberto(false);
-  }
-
-  const fecharModal = async () => {
-    setModalAberto(false);
-  }
+    props.callBackParent(modalAberto);
+  };
 
   return ( 
     <div className="card-externo">
@@ -78,8 +75,6 @@ function CardPokemon(props) {
               </div>
             )}    
         </div>
-        {tipoCard === 1 && modalAberto && (<ModalMensagem mensagem={ "Pokemon capturado com sucesso!"} modalAberto={modalAberto} callBackParent={(modalAberto) => fecharModal()}></ModalMensagem>)}
-        {tipoCard === 2 && modalAberto && (<ModalMensagem mensagem={ "Pokemon solto com sucesso!"} modalAberto={modalAberto} callBackParent={(modalAberto) => fecharModal()}></ModalMensagem>)}
     </div>
   );
 }

@@ -50,7 +50,6 @@ app.post('/catchedpokemons/:id', async (req, res) => {
   } catch (e) {
     console.error(e);
     res.send(e);
-  } finally {
     await client.close();
   }
 });

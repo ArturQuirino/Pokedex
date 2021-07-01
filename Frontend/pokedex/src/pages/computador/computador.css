@@ -1,12 +1,17 @@
 .computador-pagina {
     background-color: #FFF2F2;
     display: flex;
+    justify-content: center;
+    padding: 48px;
+    max-width: 100%;
+    height: 100%;
+}
+
+.card-computador-pagina {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding: 48px;
     row-gap: 24px;
     column-gap: 24px;
-    max-width: 100%;
-    height: 100%
 }
