@@ -13,6 +13,11 @@ app.use(express.json());
 
 const uri = process.env['mongoConnectionString'];
 
+
+app.get("/", function(req, res) {
+  res.send("Hello World");
+});
+
 app.get('/pokemons/', async (req, res) => {
   try 
   {
