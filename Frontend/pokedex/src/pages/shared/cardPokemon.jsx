@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import PokedexService from '../repositories/api'
-import ModalMensagem from './modalMensagem';
+import PokedexService from '../repositories/api';
 import './cardPokemon.css';
 
 const CardPokemon = (props) => {
@@ -37,10 +36,6 @@ const CardPokemon = (props) => {
     setCardAberto(false);
     props.callBackParent(modalAberto);
   }
-
-  const fecharModal = () => {
-    setModalAberto(false);
-  } 
 
   return ( 
     <div className="card-externo">

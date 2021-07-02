@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseApiUrl = 'http://localhost:8080/';
+const baseApiUrl = 'https://pokedex-artur-quirino.herokuapp.com/';
 
 const PokedexService = {
   async obterTodosPokemons() {
