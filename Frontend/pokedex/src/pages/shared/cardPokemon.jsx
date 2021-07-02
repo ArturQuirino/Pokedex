@@ -5,7 +5,7 @@ import './cardPokemon.css';
 
 const CardPokemon = (props) => {
 
-  const [modalAberto, setModalAberto] = useState(false);
+  const [modalAberto, setModalAberto] = useState(props.modalAberto);
   const [cardAberto, setCardAberto] = useState(false);
   const [types, setTypes] = useState([]);
   const [abilities, setAbilities] = useState([]);
@@ -28,12 +28,14 @@ const CardPokemon = (props) => {
     await PokedexService.capturarPokemon(id, name);
     setModalAberto(true);
     setCardAberto(false);
+    props.callBackParent(modalAberto);
   }
 
   const handleSoltarPokemon = async () => {
     await PokedexService.soltarPokemon(idPokemonCapturado);
     setModalAberto(true);
     setCardAberto(false);
+    props.callBackParent(modalAberto);
   }
 
   const fecharModal = () => {
@@ -75,8 +77,6 @@ const CardPokemon = (props) => {
           </div>
         )}
       </div>
-      {tipoCard===1 && modalAberto && (<ModalMensagem mensagem={"Pokemon foi capturado com sucesso!"} modalAberto={modalAberto} callBackParent={() => fecharModal()}></ModalMensagem>)}
-      {tipoCard===2 && modalAberto && (<ModalMensagem mensagem={"Pokemon foi solto com sucesso!"} modalAberto={modalAberto} callBackParent={() => fecharModal()}></ModalMensagem>)}
     </div>
   );
 }

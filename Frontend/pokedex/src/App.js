@@ -1,7 +1,7 @@
 import './App.css';
 import Pokédex_logo from './assets/images/Pokédex_logo.webp';
 
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,6 +12,12 @@ import Computador from './pages/computador/computador';
 import Pokedex from './pages/pokedex/pokedex';
 
 function App() {
+  const [filtro, setFiltro] = useState('');
+
+  const pesquisarPokemon = (event) => {
+    setFiltro(event.target.value)
+  }
+
   return (
     <Router>
       <div className="app"></div>
@@ -20,16 +26,16 @@ function App() {
         <nav className="app-navbar">
             <Link to="/" className="app-abas-pokedex">Pokedex</Link>
             <Link to="computador" className="app-abas-computador">Computador</Link>
-            <input id="search" placeholder="Pesquisar pokémon..." className="app-busca"></input>
+            <input id="search" placeholder="Pesquisar pokémon..." className="app-busca" value={filtro} onChange={pesquisarPokemon}></input>
         </nav>
       </header>
 
       <Switch>
           <Route path="/computador">
-            <Computador />
+            <Computador filtro={filtro}/>
           </Route>
           <Route path="/">
-            <Pokedex />
+            <Pokedex filtro={filtro}/>
           </Route>
       </Switch>
     </Router>
