@@ -16,7 +16,7 @@ function App() {
     <Router>
       <div className="app"></div>
       <header className="app-header">
-        <img src={Pokédex_logo} className="app-titulo"/>
+        <img src={Pokédex_logo} className="app-titulo" alt="Logo pokemon"/>
         <nav className="app-navbar">
             <Link to="/" className="app-abas-pokedex">Pokedex</Link>
             <Link to="computador" className="app-abas-computador">Computador</Link>

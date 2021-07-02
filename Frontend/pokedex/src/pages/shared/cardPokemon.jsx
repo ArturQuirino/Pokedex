@@ -42,7 +42,7 @@ const CardPokemon = (props) => {
 
   return ( 
     <div className="card-externo">
-      <img src={urlImagem} className="card-imagem"/>
+      <img src={urlImagem} className="card-imagem" alt="Imagem pokemon"/>
       <h1 className="card-nome">#{id} - {name}</h1>
       <div className="card-dropdown">
         <button className="card-botao" onClick={abrirDropdown}> + </button>
